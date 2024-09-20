@@ -1,105 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <stdbool.h>
 #include <windows.h>
 #include <time.h>
 #include <math.h>
 
-#define MAX_VERTICES 100 //limita o número de vértices do grafo
-#define INFINITO 999999 //é um valor grande para representar a ausência de arestas
-
-typedef struct {
-    int u, v;
-    int peso;
-} Aresta;
-
-int pai[MAX_VERTICES]; //é utilizado para implementar a estrutura de conjuntos disjuntos
-
-//função que retorna o representante do conjunto ao qual o elemento x pertence
-//utilizando recursão para otimizar a busca.
-int encontrar(int x) {
-    if (pai[x] == x) return x;
-    return encontrar(pai[x]);
-}
-
-//função que conecta dois conjuntos, unindo os representantes de x e y
-void unir(int x, int y) {
-    pai[encontrar(x)] = encontrar(y);
-}
-
-
-//função para comparar duas arestas 
-//é usada pelo qsort para ordenar as arestas com base no seu peso
-int compara(const void *a, const void *b) {
-    Aresta *aresta1 = (Aresta *)a;
-    Aresta *aresta2 = (Aresta *)b;
-    return aresta1->peso - aresta2->peso;
-}
-
-//função do algoritmo de Kruskal
-int kruskal(Aresta *arestas, int num_arestas, int num_vertices) {
-    qsort(arestas, num_arestas, sizeof(Aresta), compara);
-    
-    for (int i = 0; i < num_vertices; i++) pai[i] = i;
-    
-    int peso_total = 0, arestas_incluidas = 0;
-    
-    for (int i = 0; i < num_arestas && arestas_incluidas < num_vertices - 1; i++) {
-        int u = arestas[i].u;
-        int v = arestas[i].v;
-
-        if (encontrar(u) != encontrar(v)) {
-            peso_total += arestas[i].peso;
-            unir(u, v);
-            arestas_incluidas++;
-        }
-    }
-
-    //verificação se formou uma MST
-    if (arestas_incluidas != num_vertices - 1) {
-        return -1; // Indica que a MST não pôde ser formada
-    }
-
-    return peso_total;
-}
-
-//função do algoritmo de Prim
-int prim(int grafo[MAX_VERTICES][MAX_VERTICES], int num_vertices) {
-    int custo = 0;
-    int chave[MAX_VERTICES];
-    bool mstSet[MAX_VERTICES];
-
-    for (int i = 0; i < num_vertices; i++) {
-        chave[i] = INFINITO;
-        mstSet[i] = false;
-    }
-
-    chave[0] = 0;
-
-    for (int count = 0; count < num_vertices - 1; count++) {
-        int u = -1, min = INFINITO;
-
-        //escolhe o vértice com menor chave
-        for (int v = 0; v < num_vertices; v++) {
-            if (!mstSet[v] && chave[v] < min) {
-                min = chave[v];
-                u = v;
-            }
-        }
-
-        mstSet[u] = true;
-        custo += min;
-
-        //atualiza a chave dos vértices adjacentes
-        for (int v = 0; v < num_vertices; v++) {
-            if (grafo[u][v] && !mstSet[v] && grafo[u][v] < chave[v]) {
-                chave[v] = grafo[u][v];
-            }
-        }
-    }
-
-    return custo;
-}
 
 //função para gerar grafos aleatórios usando o modelo Erdős-Rényi
 void gerarGrafoErdosRenyi(int grafo[MAX_VERTICES][MAX_VERTICES], Aresta *arestas, int num_vertices, float p, int *num_arestas) {
@@ -168,7 +74,6 @@ double calcularDesvioPadrao(float *custos, int n) {
     }
     return sqrt(soma_variancia / n);
 }
-
 
 //função principal para comparação
 //realiza testes com diferentes tamanhos de grafo e probabilidades de arestas
@@ -240,7 +145,6 @@ void compararAlgoritmos(int num_vertices[], float probabilidade[], int num_teste
         printf("\n");
     }
 }
-
 
 //inicializamos o gerador de números aleatórios e chamamos a função de comparação com diferentes parâmetros de teste
 int main() {
