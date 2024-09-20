@@ -1,4 +1,4 @@
-#include "kruskal.h"
+#include "kruskal/kruskal.h"
 #include <stdlib.h>
 
 // Utilizado para implementar a estrutura de conjuntos disjuntos

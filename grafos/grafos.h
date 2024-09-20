@@ -1,7 +1,7 @@
-#ifndef GRAFO_H
-#define GRAFO_H
+#ifndef GRAFOS_H
+#define GRAFOS_H
 
-#include "kruskal.h"
+#include "kruskal/kruskal.h"
 
 #define MAX_VERTICES 100
 

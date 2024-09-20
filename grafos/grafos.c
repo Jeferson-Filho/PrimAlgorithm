@@ -1,4 +1,5 @@
-#include "grafo.h"
+#include "grafos/grafos.h"
+#include "../kruskal/kruskal.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <windows.h>
@@ -42,3 +43,13 @@ double medirTempoExecucaoKruskal(int (*algoritmo)(Aresta *, int, int), Aresta *a
     return (custo == -1) ? -1 : (double)(fim.QuadPart - inicio.QuadPart) / frequencia.QuadPart;
 }
 
+// Cronometrar tempo de execução do Algoritmo de Prim
+double medirTempoExecucaoPrim(int (*algoritmo)(int[MAX_VERTICES][MAX_VERTICES], int), int grafo[MAX_VERTICES][MAX_VERTICES], int num_vertices) {
+    LARGE_INTEGER inicio, fim, frequencia;
+    QueryPerformanceFrequency(&frequencia);
+    QueryPerformanceCounter(&inicio);
+    int custo = algoritmo(grafo, num_vertices);
+    QueryPerformanceCounter(&fim);
+    // Retorna o tempo de execução e verifica se a MST foi formada
+    return (custo == -1) ? -1 : (double)(fim.QuadPart - inicio.QuadPart) / frequencia.QuadPart;
+}

@@ -1,4 +1,4 @@
-#include "prim.h"
+#include "prim/prim.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
