@@ -8,7 +8,7 @@
 #include "utils/utils.h"
 
 // Função para comparar os algoritmos, realizando testes com diferentes tamanhos de grafos e probabilidade de arestas.
-// Para cada teste, é gerado um grafo, medido o tempo e o custo dos algoritmos de Kruskal e Prim, após isso imprime os resultados médios.
+// Para cada teste, é gerado um grafo, medido o tempo e o custo dos algoritmos de Kruskal e Prim, após isso imprime e salva os resultados médios.
 void compararAlgoritmos(int num_vertices[], float probabilidade[], int num_testes) {
     Aresta arestas[MAX_VERTICES * MAX_VERTICES];
     int grafo[MAX_VERTICES][MAX_VERTICES];
@@ -16,6 +16,16 @@ void compararAlgoritmos(int num_vertices[], float probabilidade[], int num_teste
     // Arrays para armazenar custos acumulados
     float custos_kruskal[10] = {0};
     float custos_prim[10] = {0};
+
+    // Abrir o arquivo para escrever os resultados
+    FILE *arquivo = fopen("resultados.csv", "w");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para salvar os resultados.\n");
+        return;
+    }
+
+    // Escrever cabeçalho no arquivo CSV
+    fprintf(arquivo, "n,p,tempo_kruskal,custo_kruskal,desvio_kruskal,tempo_prim,custo_prim,desvio_prim\n");
 
     for (int i = 0; i < num_testes; i++) {
         int n = num_vertices[i];
@@ -61,6 +71,9 @@ void compararAlgoritmos(int num_vertices[], float probabilidade[], int num_teste
             printf("- Tempo médio Kruskal: %.6f s\n", tempo_kruskal);
             printf("- Custo médio Kruskal: %.2f\n", custo_medio_kruskal);
             printf("- Desvio padrão Kruskal: %.2f\n", desvio_padrao_kruskal);
+
+            // Escrever resultados de Kruskal no arquivo
+            fprintf(arquivo, "%d,%.2f,%.6f,%.2f,%.2f,", n, p, tempo_kruskal, custo_medio_kruskal, desvio_padrao_kruskal);
         }
 
         if (tempo_prim > 0) {
@@ -70,10 +83,17 @@ void compararAlgoritmos(int num_vertices[], float probabilidade[], int num_teste
             printf("- Tempo médio Prim: %.6f s\n", tempo_prim);
             printf("- Custo médio Prim: %.2f\n", custo_medio_prim);
             printf("- Desvio padrão Prim: %.2f\n", desvio_padrao_prim);
+
+            // Completar a linha com os resultados de Prim
+            fprintf(arquivo, "%.6f,%.2f,%.2f\n", tempo_prim, custo_medio_prim, desvio_padrao_prim);
         }
 
         printf("\n");
     }
+
+    // Fechar o arquivo
+    fclose(arquivo);
+    printf("Resultados salvos no arquivo 'resultados.csv'.\n");
 }
 
 int main() {
