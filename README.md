@@ -53,7 +53,8 @@ This project focuses on implementing and comparing two well-known algorithms for
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Descrever como rodar o projeto no ambiente local
+To compile the project, use ´gcc -mconsole .\main.c .\kruskal\kruskal.c .\prim\prim.c .\grafos\grafos.c .\utils\utils.c -o grafos´
+After this, execute '.\grafos'
 
 ### Prerequisites
 
@@ -67,28 +68,27 @@ Instalação de ferramentas necessárias para rodar o projeto (verificar se ser�
 ## Roadmap
 
 ### Algorithms
-- [ ] Generate Erdős-Rényi Graphs
-    - [ ] Write a function to generate random graphs using the Erdős-Rényi model
-    - [ ] Test graph generation with different values of n and p
-- [ ] Implement Prim's Algorithm
-    - [ ] Define graph representation (adjacency list or matrix)
-    - [ ] Write Prim's Algorithm function
-    - [ ] Test Prim's Algorithm on small graphs
-- [ ] Implement Kruskal's Algorithm
-    - [ ] Define union-find (disjoint-set) data structure
-    - [ ] Write Kruskal's Algorithm function
-    - [ ] Test Kruskal's Algorithm on small graphs
+- [X] Generate Erdős-Rényi Graphs
+    - [X] Write a function to generate random graphs using the Erdős-Rényi model
+    - [X] Test graph generation with different values of n and p
+- [X] Implement Prim's Algorithm
+    - [X] Define graph representation (adjacency list or matrix)
+    - [X] Write Prim's Algorithm function
+    - [X] Test Prim's Algorithm on small graphs
+- [X] Implement Kruskal's Algorithm
+    - [X] Define union-find (disjoint-set) data structure
+    - [X] Write Kruskal's Algorithm function
+    - [X] Test Kruskal's Algorithm on small graphs
 
 ### Analysis
-- [ ] Performance Comparison
-    - [ ] Implement function to measure execution time (Prim and Kruskal)
-        - [ ] Use <chrono> library or an external timing library
-    - [ ] Test performance comparison on small graphs
-    - [ ] Run experiments with different values of p (at least 10 values)
-    - [ ] Run experiments with different values of n (at least 10 values)
+- [X] Performance Comparison
+    - [X] Implement function to measure execution time (Prim and Kruskal)
+    - [X] Test performance comparison on small graphs
+    - [X] Run experiments with different values of p (at least 10 values)
+    - [X] Run experiments with different values of n (at least 10 values)
     - [ ] For each pair of p and n, analyze at least 10 random graphs
-- [ ] Statistical Analysis
-    - [ ] Calculate mean and standard deviation of MST costs and execution times
+- [X] Statistical Analysis
+    - [X] Calculate mean and standard deviation of MST costs and execution times
     - [ ] Normalize results by dividing by n
 - [ ] Results Presentation
     - [ ] Plot execution time vs. p and n (use Gnuplot, Matplotlib C++ or export data to a CSV and use Python/Excel for plotting)
