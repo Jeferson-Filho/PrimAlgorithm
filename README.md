@@ -53,7 +53,8 @@ This project focuses on implementing and comparing two well-known algorithms for
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To compile the project, use ´gcc -mconsole .\main.c .\kruskal\kruskal.c .\prim\prim.c .\grafos\grafos.c .\utils\utils.c -o grafos´
+To compile the project, use `gcc src/main.c src/kruskal/kruskal.c src/prim/prim.c src/grafos/grafos.c src/utils/utils.c -o .\grafos.exe`
+
 After this, execute '.\grafos'
 
 ### Prerequisites
