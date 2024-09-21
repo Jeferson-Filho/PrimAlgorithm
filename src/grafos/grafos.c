@@ -1,4 +1,4 @@
-#include "grafos/grafos.h"
+#include "grafos.h"
 #include "../kruskal/kruskal.h"
 #include <stdlib.h>
 #include <stdbool.h>

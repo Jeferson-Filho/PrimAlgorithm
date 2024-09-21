@@ -1,4 +1,4 @@
-#include "utils/utils.h"
+#include "utils.h"
 #include <math.h>
 
 // Cálculo da média
