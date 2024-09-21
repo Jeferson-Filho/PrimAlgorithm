@@ -2,7 +2,13 @@
 #include "../kruskal/kruskal.h"
 #include <stdlib.h>
 #include <stdbool.h>
+
+// Compatibilidade para Windows/Linux (WSL)
+#ifdef _WIN32
 #include <windows.h>
+#else
+#include <time.h>
+#endif
 
 // Implementação do modelo de Erdos Renyi >> Gerar grafos aleatórios
 void gerarGrafoErdosRenyi(int grafo[MAX_VERTICES][MAX_VERTICES], Aresta *arestas, int num_vertices, float p, int *num_arestas) {
@@ -32,24 +38,51 @@ void gerarGrafoErdosRenyi(int grafo[MAX_VERTICES][MAX_VERTICES], Aresta *arestas
 }
 
 // Cronometrar tempo de execução do Algoritmo de Kruskal
-// TODO: utilizando funções da biblioteca windows.h para cronometrar (podemos alterar para funcionar em qualquer SO)
 double medirTempoExecucaoKruskal(int (*algoritmo)(Aresta *, int, int), Aresta *arestas, int num_arestas, int num_vertices) {
+    int custo;
+
+#ifdef _WIN32
     LARGE_INTEGER inicio, fim, frequencia;
     QueryPerformanceFrequency(&frequencia);
     QueryPerformanceCounter(&inicio);
-    int custo = algoritmo(arestas, num_arestas, num_vertices);
+    
+    custo = algoritmo(arestas, num_arestas, num_vertices);
+    
     QueryPerformanceCounter(&fim);
-    //retorna o tempo de execução e verifica se a MST foi formada
     return (custo == -1) ? -1 : (double)(fim.QuadPart - inicio.QuadPart) / frequencia.QuadPart;
+
+#else
+    struct timespec inicio, fim;
+    clock_gettime(CLOCK_MONOTONIC, &inicio);
+    
+    custo = algoritmo(arestas, num_arestas, num_vertices);
+    
+    clock_gettime(CLOCK_MONOTONIC, &fim);
+    return (custo == -1) ? -1 : (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9;
+#endif
 }
 
 // Cronometrar tempo de execução do Algoritmo de Prim
 double medirTempoExecucaoPrim(int (*algoritmo)(int[MAX_VERTICES][MAX_VERTICES], int), int grafo[MAX_VERTICES][MAX_VERTICES], int num_vertices) {
+    int custo;
+
+#ifdef _WIN32
     LARGE_INTEGER inicio, fim, frequencia;
     QueryPerformanceFrequency(&frequencia);
     QueryPerformanceCounter(&inicio);
-    int custo = algoritmo(grafo, num_vertices);
+    
+    custo = algoritmo(grafo, num_vertices);
+    
     QueryPerformanceCounter(&fim);
-    // Retorna o tempo de execução e verifica se a MST foi formada
     return (custo == -1) ? -1 : (double)(fim.QuadPart - inicio.QuadPart) / frequencia.QuadPart;
+
+#else
+    struct timespec inicio, fim;
+    clock_gettime(CLOCK_MONOTONIC, &inicio);
+    
+    custo = algoritmo(grafo, num_vertices);
+    
+    clock_gettime(CLOCK_MONOTONIC, &fim);
+    return (custo == -1) ? -1 : (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9;
+#endif
 }
