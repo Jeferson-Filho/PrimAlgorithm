@@ -1,3 +1,16 @@
+/**
+ * Grafos - Projeto 1
+ * 
+ * Comparação entre algoritmo de Kruskal e Prim
+ * 
+ * Beatriz Cavalheri
+ * Caio Bohlhalter
+ * Eduarda Moreira
+ * Jeferson Dietrich
+ * Larissa Ferrari
+ * Maysa Marques
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
